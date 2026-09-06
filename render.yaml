@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: refinishing-production-system
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FIREBASE_PROJECT_ID
+        value: refinishing-3ffac
+      - key: FIREBASE_AUTH_DOMAIN
+        value: refinishing-3ffac.firebaseapp.com
