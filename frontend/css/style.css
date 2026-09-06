@@ -62,7 +62,26 @@ body {
   color: #334155;
   line-height: 1.5;
   min-height: 100vh;
+  position: relative;
   -webkit-text-size-adjust: 100%;
+}
+
+/* Subtle low-visibility Aditya Birla watermark background on each and every page */
+body::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 550px;
+  height: 550px;
+  background-image: url('../assets/logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0.05; /* Low visibility subtle watermark */
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* App Layout */
@@ -90,17 +109,18 @@ body {
   gap: 12px;
 }
 
-.sidebar-logo-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--color-primary);
-  color: white;
+.sidebar-logo-icon, .sidebar-logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  background: #ffffff;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 1.1rem;
+  padding: 2px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
 .sidebar-brand {
@@ -563,17 +583,38 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  position: relative;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 41, 59, 0.95) 100%),
+              url('../assets/logo.png') center/40% no-repeat;
   padding: 20px;
 }
 
 .login-card {
   background-color: var(--color-surface);
   width: 100%;
-  max-width: 440px;
+  max-width: 450px;
   border-radius: var(--radius-lg);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.35), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
   padding: 40px 32px;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-brand-logo {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.login-logo-img {
+  height: 76px;
+  width: auto;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e2e8f0;
 }
 
 .login-header {
