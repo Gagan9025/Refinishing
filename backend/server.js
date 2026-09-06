@@ -23,7 +23,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve frontend static files
+// Serve frontend static assets and files
+app.use('/assets', express.static(path.join(__dirname, '../frontend/assets')));
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // API Routes
