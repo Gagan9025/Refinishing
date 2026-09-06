@@ -35,8 +35,16 @@ app.use('/api/hod', hodRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/export', exportRoutes);
 
-// Fallback to index.html for root navigation
-app.get('/', (req, res) => {
+// Redirect old/removed dispatch routes directly to Attendance page
+app.get(['/pages/dispatch-dashboard.html', '/dispatch-dashboard'], (req, res) => {
+  res.redirect('/pages/attendance.html');
+});
+
+// Fallback to index.html for root and unhandled non-API page navigation
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'API endpoint not found.' });
+  }
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
