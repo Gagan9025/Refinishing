@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Environment Variables & Secrets
+.env
+!.env.example
+
+# Database temporary files / runtime caches if needed
+# Note: Keep database/local-firestore.json if initial schema is needed, or exclude if purely dynamic
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE & Editor files
+.vscode/
+.idea/

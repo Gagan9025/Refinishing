@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function hasRole(role) {
+      return isSignedIn() && (getUserData().role == role || getUserData().role == 'admin');
+    }
+    
+    function isHOD() {
+      return isSignedIn() && (getUserData().role == 'hod' || getUserData().role == 'admin');
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow write: if hasRole('admin');
+    }
+
+    // Scanning Production Collection
+    match /scanningProduction/{docId} {
+      allow read: if hasRole('scanning_supervisor') || isHOD();
+      allow write: if hasRole('scanning_supervisor');
+    }
+
+    // Batch Production Collection
+    match /batchProduction/{docId} {
+      allow read: if hasRole('batch_supervisor') || isHOD();
+      allow write: if hasRole('batch_supervisor');
+    }
+
+    // Dispatch Production Collection
+    match /dispatchProduction/{docId} {
+      allow read: if hasRole('dispatch_supervisor') || isHOD();
+      allow write: if hasRole('dispatch_supervisor');
+    }
+
+    // Attendance Collection
+    match /attendance/{docId} {
+      allow read: if hasRole('dispatch_supervisor') || isHOD();
+      allow write: if hasRole('dispatch_supervisor');
+    }
+  }
+}

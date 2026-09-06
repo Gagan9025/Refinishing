@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch Production History - Refinishing System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">R</div>
+        <div class="sidebar-brand">
+          Refinishing System
+          <span>Production Mgmt</span>
+        </div>
+      </div>
+      <ul class="sidebar-menu" id="sidebar-menu"></ul>
+      <div class="sidebar-footer">© 2026 Refinishing Dept</div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <h2 class="header-title">Batch Production History</h2>
+          <div class="header-clock">
+            📅 <span id="header-date">--/--/----</span> | ⏰ <span id="header-time">--:--:--</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="user-badge">
+            <div class="user-avatar" id="header-user-avatar">U</div>
+            <div class="user-info">
+              <span class="user-name" id="header-user-name">Supervisor</span>
+              <span class="user-role" id="header-user-role">Batch Supervisor</span>
+            </div>
+          </div>
+          <button class="btn-logout" id="btn-logout">Logout</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Batch Production History</h1>
+            <p class="page-subtitle">View historical batch production records and performance metrics.</p>
+          </div>
+          <div>
+            <button class="btn btn-secondary" onclick="exportHistory()">📥 Export CSV Report</button>
+          </div>
+        </div>
+
+        <!-- Filter Panel -->
+        <div class="panel">
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="history-start-date">Start Date</label>
+              <input type="date" id="history-start-date" class="form-input">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="history-end-date">End Date</label>
+              <input type="date" id="history-end-date" class="form-input">
+            </div>
+
+            <div class="form-group" style="justify-content: flex-end;">
+              <button class="btn btn-primary" onclick="loadHistory()">Filter History</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- History Table -->
+        <div class="panel">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Supervisor</th>
+                  <th>Daily Target</th>
+                  <th>Total Achieved</th>
+                  <th>Pending</th>
+                  <th>Achievement %</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body">
+                <tr><td colspan="7" style="text-align: center;">Loading history...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const authorized = await Auth.checkAccess(['batch_supervisor', 'hod', 'admin']);
+      if (!authorized) return;
+
+      initHeaderAndSidebar('batch-history');
+      loadHistory();
+    });
+
+    async function loadHistory() {
+      const start = document.getElementById('history-start-date').value;
+      const end = document.getElementById('history-end-date').value;
+
+      let query = '';
+      if (start) query += `startDate=${start}&`;
+      if (end) query += `endDate=${end}&`;
+
+      try {
+        const res = await API.request(`/api/batch/history?${query}`);
+        const tbody = document.getElementById('history-table-body');
+        
+        if (!res.records || res.records.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center;">No records found for selected date range.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = res.records.map(r => {
+          const statusBadge = r.achievementPercentage >= 100 
+            ? `<span class="badge badge-success">Target Exceeded</span>`
+            : r.achievementPercentage >= 80 
+              ? `<span class="badge badge-warning">On Track</span>`
+              : `<span class="badge badge-danger">Below Target</span>`;
+
+          return `
+            <tr>
+              <td><strong>${r.date}</strong></td>
+              <td>${r.supervisorName || r.supervisorId}</td>
+              <td><strong>${r.dailyTarget}</strong></td>
+              <td><strong style="color: var(--color-primary);">${r.totalAchieved}</strong></td>
+              <td>${r.pending}</td>
+              <td><strong>${r.achievementPercentage}%</strong></td>
+              <td>${statusBadge}</td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        showToast(err.message || 'Error loading history', 'error');
+      }
+    }
+
+    function exportHistory() {
+      const start = document.getElementById('history-start-date').value;
+      const end = document.getElementById('history-end-date').value;
+      window.open(`/api/export/download?module=batch&startDate=${start}&endDate=${end}`, '_blank');
+    }
+  </script>
+</body>
+</html>

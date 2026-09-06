@@ -1,0 +1,19 @@
+{
+  "name": "refinishing-production-system",
+  "version": "1.0.0",
+  "description": "Refinishing Department Production Management System",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node backend/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "firebase": "^12.18.0",
+    "firebase-admin": "^12.1.0",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

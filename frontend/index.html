@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Refinishing Department Production Management System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-body">
+
+  <div class="login-card">
+    <div class="login-header">
+      <div class="sidebar-logo-icon" style="width: 48px; height: 48px; margin: 0 auto; font-size: 1.5rem;">R</div>
+      <h1 class="login-title">Refinishing Department Production Management System</h1>
+      <p class="login-subtitle">Daily Production, Dispatch & Attendance Tracking</p>
+    </div>
+
+    <!-- Alert / Error message display -->
+    <div id="login-error" class="panel" style="display: none; padding: 12px; margin-bottom: 20px; background-color: var(--color-danger-bg); border-color: var(--color-danger-border); color: var(--color-danger); font-size: 0.875rem; font-weight: 500;">
+    </div>
+
+    <form id="login-form">
+      <div class="form-group" style="margin-bottom: 18px;">
+        <label class="form-label" for="username">Username / Email</label>
+        <input type="text" id="username" class="form-input form-input-lg" placeholder="e.g. scan.supervisor" required autocomplete="username">
+      </div>
+
+      <div class="form-group" style="margin-bottom: 24px;">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" class="form-input form-input-lg" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+
+      <button type="submit" id="btn-login-submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 1rem;">
+        Login to Dashboard
+      </button>
+    </form>
+
+    <!-- Demo Credentials Quick-Fill -->
+    <div class="demo-credentials-box">
+      <div class="demo-credentials-title">Demo Testing Accounts (Click to Fill)</div>
+      <div class="demo-btn-group">
+        <button type="button" class="btn-demo-fill" onclick="fillDemo('scan.supervisor', 'Scan@123')">Scanning Sup.</button>
+        <button type="button" class="btn-demo-fill" onclick="fillDemo('batch.supervisor', 'Batch@123')">Batch Sup.</button>
+        <button type="button" class="btn-demo-fill" onclick="fillDemo('dispatch.supervisor', 'Dispatch@123')">Dispatch Sup.</button>
+        <button type="button" class="btn-demo-fill" onclick="fillDemo('hod', 'HOD@123')">HOD</button>
+        <button type="button" class="btn-demo-fill" onclick="fillDemo('admin', 'Admin@123')">Admin</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    function fillDemo(username, password) {
+      document.getElementById('username').value = username;
+      document.getElementById('password').value = password;
+      document.getElementById('login-error').style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check query params for session expiration message
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('sessionExpired')) {
+        const errEl = document.getElementById('login-error');
+        errEl.textContent = 'Your session has expired or is invalid. Please log in again.';
+        errEl.style.display = 'block';
+      }
+
+      // Check if user is already logged in
+      const user = API.getUser();
+      const token = API.getToken();
+      if (token && user && Auth.ROLE_DASHBOARDS[user.role]) {
+        window.location.href = Auth.ROLE_DASHBOARDS[user.role];
+        return;
+      }
+
+      // Handle form submission
+      const form = document.getElementById('login-form');
+      const submitBtn = document.getElementById('btn-login-submit');
+      const errorEl = document.getElementById('login-error');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorEl.style.display = 'none';
+        
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Authenticating...';
+
+        try {
+          await Auth.login(username, password);
+        } catch (err) {
+          errorEl.textContent = err.message || 'Login failed. Please check credentials.';
+          errorEl.style.display = 'block';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Login to Dashboard';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

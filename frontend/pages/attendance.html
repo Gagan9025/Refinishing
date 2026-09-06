@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Attendance - Refinishing System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">R</div>
+        <div class="sidebar-brand">
+          Refinishing System
+          <span>Production Mgmt</span>
+        </div>
+      </div>
+      <ul class="sidebar-menu" id="sidebar-menu"></ul>
+      <div class="sidebar-footer">© 2026 Refinishing Dept</div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <h2 class="header-title">Daily Employee Attendance</h2>
+          <div class="header-clock">
+            📅 <span id="header-date">--/--/----</span> | ⏰ <span id="header-time">--:--:--</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="user-badge">
+            <div class="user-avatar" id="header-user-avatar">U</div>
+            <div class="user-info">
+              <span class="user-name" id="header-user-name">Supervisor</span>
+              <span class="user-role" id="header-user-role">Dispatch Supervisor</span>
+            </div>
+          </div>
+          <button class="btn-logout" id="btn-logout">Logout</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Refinishing Department Attendance</h1>
+            <p class="page-subtitle">Track daily worker attendance, present/absent counts, and arrival times.</p>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="openAddModal()">➕ Add Employee</button>
+            <button class="btn btn-danger" onclick="resetAttendanceData()">🔄 Reset Day Attendance</button>
+            <button class="btn btn-secondary" onclick="triggerExportAttendance()">📥 Export Attendance CSV</button>
+          </div>
+        </div>
+
+        <!-- Date Selector Panel -->
+        <div class="panel">
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label" for="attendance-date">Select Attendance Date</label>
+              <input type="date" id="attendance-date" class="form-input" onchange="loadAttendanceData()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="card-grid">
+          <div class="metric-card info">
+            <span class="metric-label">Total Staff</span>
+            <span class="metric-value" id="metric-total-emp">0</span>
+            <span class="metric-sub">Total registered employees</span>
+          </div>
+
+          <div class="metric-card success">
+            <span class="metric-label">Present</span>
+            <span class="metric-value" id="metric-present-emp">0</span>
+            <span class="metric-sub">Workers present today</span>
+          </div>
+
+          <div class="metric-card danger">
+            <span class="metric-label">Absent</span>
+            <span class="metric-value" id="metric-absent-emp">0</span>
+            <span class="metric-sub">Workers absent today</span>
+          </div>
+
+          <div class="metric-card info">
+            <span class="metric-label">Attendance Rate</span>
+            <span class="metric-value" id="metric-attendance-pct">0%</span>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="attendance-progress-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attendance Roster Table -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>Today's Employee Attendance Roster</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Employee ID</th>
+                  <th>Employee Name</th>
+                  <th>Status</th>
+                  <th>Check-In Time</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-table-body">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Employee Modal -->
+  <div class="modal-overlay" id="add-emp-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Employee to Roster</h3>
+        <button class="modal-close" onclick="closeAddModal()">×</button>
+      </div>
+
+      <form id="add-emp-form" onsubmit="handleAddEmployee(event)">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" for="new-emp-id">Employee ID</label>
+          <input type="text" id="new-emp-id" class="form-input" placeholder="e.g. EMP051" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" for="new-emp-name">Employee Full Name</label>
+          <input type="text" id="new-emp-name" class="form-input" placeholder="e.g. Sarah Jenkins" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label" for="new-emp-status">Initial Status</label>
+          <select id="new-emp-status" class="form-select">
+            <option value="Present">Present</option>
+            <option value="Absent">Absent</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/attendance.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const authorized = await Auth.checkAccess(['dispatch_supervisor', 'hod', 'admin']);
+      if (!authorized) return;
+
+      initHeaderAndSidebar('attendance');
+
+      const todayStr = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('attendance-date');
+      if (dateInput) dateInput.value = todayStr;
+
+      loadAttendanceData();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch Production Dashboard - Refinishing System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">R</div>
+        <div class="sidebar-brand">
+          Refinishing System
+          <span>Production Mgmt</span>
+        </div>
+      </div>
+      <ul class="sidebar-menu" id="sidebar-menu"></ul>
+      <div class="sidebar-footer">© 2026 Refinishing Dept</div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <h2 class="header-title">Batch Production Dashboard</h2>
+          <div class="header-clock">
+            📅 <span id="header-date">--/--/----</span> | ⏰ <span id="header-time">--:--:--</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="user-badge">
+            <div class="user-avatar" id="header-user-avatar">U</div>
+            <div class="user-info">
+              <span class="user-name" id="header-user-name">Supervisor</span>
+              <span class="user-role" id="header-user-role">Batch Supervisor</span>
+            </div>
+          </div>
+          <button class="btn-logout" id="btn-logout">Logout</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+        
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Batch Production</h1>
+            <p class="page-subtitle">Manage daily batch production targets, record hourly batch output, and track progress.</p>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <span id="day-status-banner" class="badge badge-info" style="padding: 8px 14px; font-size: 0.85rem;">PRODUCTION IN PROGRESS</span>
+            <button class="btn btn-danger" onclick="resetBatchData()">🔄 Reset Day Data to 0</button>
+            <button class="btn btn-secondary" onclick="triggerExport('csv')">📥 Export CSV</button>
+          </div>
+        </div>
+
+        <!-- Target Setting Panel -->
+        <div class="panel">
+          <div id="target-form-section" style="display: block;">
+            <div class="panel-title">Set Daily Batch Production Target</div>
+            <div class="form-group-row">
+              <div class="form-group">
+                <label class="form-label" for="target-date">Select Date</label>
+                <input type="date" id="target-date" class="form-input" onchange="loadBatchDashboard()">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="input-daily-target">Daily Batch Target (Pieces)</label>
+                <input type="number" id="input-daily-target" class="form-input form-input-lg" placeholder="e.g. 600" min="1">
+              </div>
+
+              <div class="form-group" style="justify-content: flex-end;">
+                <button id="btn-save-target" class="btn btn-primary" onclick="saveTarget()">Save Daily Target</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="target-display-section" style="display: none; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <span class="form-label" style="text-transform: uppercase; letter-spacing: 0.05em; color: #64748b;">Today's Set Batch Target</span>
+              <div id="daily-target-value" style="font-size: 1.6rem; font-weight: 800; color: #0f172a;">600 Pieces</div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+              <button class="btn btn-secondary" onclick="enableEditTarget()">✏️ Edit Target</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Summary Cards -->
+        <div class="card-grid">
+          <div class="metric-card info">
+            <span class="metric-label">Daily Target</span>
+            <span class="metric-value" id="metric-daily-target">0</span>
+            <span class="metric-sub">Pieces target for today</span>
+          </div>
+
+          <div class="metric-card success">
+            <span class="metric-label">Total Achieved</span>
+            <span class="metric-value" id="metric-total-achieved">0</span>
+            <span class="metric-sub">Sum of hourly production</span>
+          </div>
+
+          <div class="metric-card warning">
+            <span class="metric-label">Pending Target</span>
+            <span class="metric-value" id="metric-pending">0</span>
+            <span class="metric-sub" id="metric-pending-sub">Remaining to reach daily target</span>
+          </div>
+
+          <div class="metric-card info">
+            <span class="metric-label">Overall Achievement %</span>
+            <span class="metric-value" id="metric-achievement-pct">0%</span>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="achievement-progress-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hourly Production Table Panel -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>Hourly Batch Entry</span>
+            <span style="font-size: 0.85rem; font-weight: 500; color: #64748b;">Schedule: 8:30 AM – 5:00 PM (8 Working Hours)</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Time Slot</th>
+                  <th>Hourly Target</th>
+                  <th>Achieved Quantity</th>
+                  <th>Difference</th>
+                  <th>Achievement %</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="batch-table-body">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/batch.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const authorized = await Auth.checkAccess(['batch_supervisor', 'hod', 'admin']);
+      if (!authorized) return;
+
+      initHeaderAndSidebar('batch-dashboard');
+      
+      const todayStr = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('target-date');
+      if (dateInput) dateInput.value = todayStr;
+
+      loadBatchDashboard();
+    });
+  </script>
+</body>
+</html>

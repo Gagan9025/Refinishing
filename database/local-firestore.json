@@ -1,0 +1,382 @@
+{
+  "users": {
+    "scan.supervisor": {
+      "username": "scan.supervisor",
+      "name": "Scanning Supervisor",
+      "role": "scanning_supervisor",
+      "status": "active",
+      "passwordHash": "$2a$10$nS0cMIEvYd50YleMH/5cCuHdwDSscyvKfxveKeXZvc8huVeCg1k6m",
+      "updatedAt": "2026-09-06T16:03:26.089Z",
+      "createdAt": "2026-09-06T16:03:26.089Z"
+    },
+    "batch.supervisor": {
+      "username": "batch.supervisor",
+      "name": "Batch Supervisor",
+      "role": "batch_supervisor",
+      "status": "active",
+      "passwordHash": "$2a$10$FsZ5zSjAWwpOyTXnvWK8HObkEN7.bAaoiTDLXxCmCtqNhUId53Boy",
+      "updatedAt": "2026-09-06T16:03:26.578Z",
+      "createdAt": "2026-09-06T16:03:26.578Z"
+    },
+    "dispatch.supervisor": {
+      "username": "dispatch.supervisor",
+      "name": "Dispatch Supervisor",
+      "role": "dispatch_supervisor",
+      "status": "active",
+      "passwordHash": "$2a$10$ZsaLr0mcb3bnxZ3CTXGvXuSYPduonAwDlmC.RguWc4HyCTOGPmWX2",
+      "updatedAt": "2026-09-06T16:03:26.647Z",
+      "createdAt": "2026-09-06T16:03:26.647Z"
+    },
+    "hod": {
+      "username": "hod",
+      "name": "Department HOD",
+      "role": "hod",
+      "status": "active",
+      "passwordHash": "$2a$10$kTigl4Gdyc41yyXSdqYpH.s7iQZ1/i2j6jBKAHGkQCpajQCe8/ipC",
+      "updatedAt": "2026-09-06T16:03:26.716Z",
+      "createdAt": "2026-09-06T16:03:26.716Z"
+    },
+    "admin": {
+      "username": "admin",
+      "name": "System Admin",
+      "role": "admin",
+      "status": "active",
+      "passwordHash": "$2a$10$Y5/B6krgupOrE5EN.ue3TOImM48lWQNabc94N8TBqucEdUlkgMShG",
+      "updatedAt": "2026-09-06T16:03:26.786Z",
+      "createdAt": "2026-09-06T16:03:26.786Z"
+    }
+  },
+  "scanningProduction": {
+    "scanning_2026-09-06": {
+      "date": "2026-09-06",
+      "supervisorId": "scan.supervisor",
+      "supervisorName": "Scanning Supervisor",
+      "dailyTarget": 0,
+      "hourlyTarget": 0,
+      "hourlyData": {},
+      "totalAchieved": 0,
+      "pending": 0,
+      "achievementPercentage": 0,
+      "updatedBy": "scan.supervisor",
+      "updatedAt": "2026-09-06T16:39:50.418Z",
+      "createdAt": "2026-09-06T16:39:50.418Z"
+    }
+  },
+  "batchProduction": {},
+  "dispatchProduction": {},
+  "attendance": {
+    "attendance_2026-09-06": {
+      "date": "2026-09-06",
+      "totalEmployees": 50,
+      "presentCount": 0,
+      "absentCount": 0,
+      "attendancePercentage": 0,
+      "records": [
+        {
+          "employeeId": "EMP001",
+          "employeeName": "Alex Johnson",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP002",
+          "employeeName": "Beatriz Silva",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP003",
+          "employeeName": "Carlos Mendez",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP004",
+          "employeeName": "David Kim",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP005",
+          "employeeName": "Elena Rostova",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP006",
+          "employeeName": "Farhan Akhtar",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP007",
+          "employeeName": "Grace Chen",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP008",
+          "employeeName": "Hassan Ali",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP009",
+          "employeeName": "Irene Adler",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP010",
+          "employeeName": "Jamal Crawford",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP011",
+          "employeeName": "Kevin Patel",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP012",
+          "employeeName": "Laura Palmer",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP013",
+          "employeeName": "Marcus Vance",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP014",
+          "employeeName": "Nina Dobrev",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP015",
+          "employeeName": "Omar Farooq",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP016",
+          "employeeName": "Pradeep Sharma",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP017",
+          "employeeName": "Qasim Khan",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP018",
+          "employeeName": "Rachel Green",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP019",
+          "employeeName": "Siddharth Rao",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP020",
+          "employeeName": "Tariq Mahmood",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP021",
+          "employeeName": "Umar Farooq",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP022",
+          "employeeName": "Victor Hugo",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP023",
+          "employeeName": "Winston Smith",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP024",
+          "employeeName": "Xavier Dupont",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP025",
+          "employeeName": "Yousuf Raza",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP026",
+          "employeeName": "Zainab Malik",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP027",
+          "employeeName": "Aaron Paul",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP028",
+          "employeeName": "Bryan Cranston",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP029",
+          "employeeName": "Claire Danes",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP030",
+          "employeeName": "Daniel Craig",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP031",
+          "employeeName": "Emily Blunt",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP032",
+          "employeeName": "Frank Castle",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP033",
+          "employeeName": "George Clooney",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP034",
+          "employeeName": "Hannah Abbott",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP035",
+          "employeeName": "Ian McKellen",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP036",
+          "employeeName": "John Wick",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP037",
+          "employeeName": "Kate Winslet",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP038",
+          "employeeName": "Liam Neeson",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP039",
+          "employeeName": "Morgan Freeman",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP040",
+          "employeeName": "Naomi Watts",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP041",
+          "employeeName": "Oliver Stone",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP042",
+          "employeeName": "Peter Parker",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP043",
+          "employeeName": "Quentin Tarantino",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP044",
+          "employeeName": "Robert DeNiro",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP045",
+          "employeeName": "Steve Rogers",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP046",
+          "employeeName": "Tom Hardy",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP047",
+          "employeeName": "Uma Thurman",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP048",
+          "employeeName": "Vin Diesel",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP049",
+          "employeeName": "Will Smith",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP050",
+          "employeeName": "Zendaya Coleman",
+          "status": "Unmarked",
+          "time": "—"
+        }
+      ],
+      "markedBy": "dispatch.supervisor",
+      "isNew": true,
+      "updatedAt": "2026-09-06T16:39:50.424Z",
+      "createdAt": "2026-09-06T16:39:50.424Z"
+    }
+  }
+}

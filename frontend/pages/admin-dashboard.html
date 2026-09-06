@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Refinishing System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">R</div>
+        <div class="sidebar-brand">
+          Refinishing System
+          <span>Production Mgmt</span>
+        </div>
+      </div>
+      <ul class="sidebar-menu" id="sidebar-menu"></ul>
+      <div class="sidebar-footer">© 2026 Refinishing Dept</div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-left">
+          <h2 class="header-title">System Administration</h2>
+          <div class="header-clock">
+            📅 <span id="header-date">--/--/----</span> | ⏰ <span id="header-time">--:--:--</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="user-badge">
+            <div class="user-avatar" id="header-user-avatar">A</div>
+            <div class="user-info">
+              <span class="user-name" id="header-user-name">System Admin</span>
+              <span class="user-role" id="header-user-role">Admin</span>
+            </div>
+          </div>
+          <button class="btn-logout" id="btn-logout">Logout</button>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">User & Access Management</h1>
+            <p class="page-subtitle">Manage user accounts, assign department roles, disable accounts, and reset credentials.</p>
+          </div>
+
+          <div>
+            <button class="btn btn-primary" onclick="openCreateUserModal()">➕ Create New User</button>
+          </div>
+        </div>
+
+        <!-- User Accounts Table Panel -->
+        <div class="panel">
+          <div class="panel-title">
+            <span>System Users Directory</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Full Name</th>
+                  <th>Username</th>
+                  <th>System Role</th>
+                  <th>Account Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-users-table-body">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Quick Access Shortcuts Panel -->
+        <div class="panel">
+          <div class="panel-title">System Overview Shortcuts</div>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="/pages/scanning-dashboard.html" class="btn btn-secondary">📦 Scanning Production</a>
+            <a href="/pages/batch-dashboard.html" class="btn btn-secondary">⚙️ Batch Production</a>
+            <a href="/pages/attendance.html" class="btn btn-secondary">👥 Employee Attendance</a>
+            <a href="/pages/hod-dashboard.html" class="btn btn-secondary">📊 HOD Executive View</a>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Create User Modal -->
+  <div class="modal-overlay" id="create-user-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Create System User</h3>
+        <button class="modal-close" onclick="closeCreateUserModal()">×</button>
+      </div>
+
+      <form id="create-user-form" onsubmit="handleCreateUser(event)">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" for="create-user-name">Full Name</label>
+          <input type="text" id="create-user-name" class="form-input" placeholder="e.g. John Doe" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" for="create-user-username">Username</label>
+          <input type="text" id="create-user-username" class="form-input" placeholder="e.g. john.doe" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" for="create-user-role">Role</label>
+          <select id="create-user-role" class="form-select" required>
+            <option value="scanning_supervisor">Scanning Supervisor</option>
+            <option value="batch_supervisor">Batch Supervisor</option>
+            <option value="dispatch_supervisor">Dispatch Supervisor (Attendance)</option>
+            <option value="hod">Department HOD</option>
+            <option value="admin">System Admin</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label" for="create-user-password">Password</label>
+          <input type="password" id="create-user-password" class="form-input" placeholder="••••••••" required>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary" onclick="closeCreateUserModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create User Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Reset Password Modal -->
+  <div class="modal-overlay" id="reset-password-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Reset User Password</h3>
+        <button class="modal-close" onclick="closeResetPasswordModal()">×</button>
+      </div>
+
+      <form id="reset-password-form" onsubmit="handleResetPassword(event)">
+        <p style="margin-bottom: 16px; color: #64748b; font-size: 0.9rem;">
+          Resetting password for: <strong id="reset-user-display" style="color: #0f172a;">User</strong>
+        </p>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label" for="reset-new-password">New Password</label>
+          <input type="password" id="reset-new-password" class="form-input" placeholder="At least 6 characters" required>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button type="button" class="btn btn-secondary" onclick="closeResetPasswordModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const authorized = await Auth.checkAccess(['admin']);
+      if (!authorized) return;
+
+      initHeaderAndSidebar('admin-dashboard');
+      loadAdminDashboard();
+    });
+  </script>
+</body>
+</html>
