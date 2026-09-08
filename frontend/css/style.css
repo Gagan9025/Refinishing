@@ -965,7 +965,7 @@ body::before {
 
   .page-content {
     padding: 16px;
-    padding-bottom: 85px !important;
+    padding-bottom: 24px;
   }
 
   .card-grid {
@@ -992,77 +992,11 @@ body::before {
   }
 }
 
-/* Floating Bottom App Navigation Dock (<768px) */
-@media (max-width: 768px) {
-  .mobile-bottom-dock {
-    display: block;
-    position: fixed;
-    bottom: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1030;
-    width: calc(100% - 24px);
-    max-width: 440px;
-  }
-
-  .dock-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background: rgba(15, 23, 42, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 22px;
-    padding: 6px 8px;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
-  }
-
-  .dock-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    color: #94a3b8;
-    text-decoration: none;
-    background: none;
-    border: none;
-    padding: 7px 10px;
-    border-radius: 16px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    flex: 1;
-    text-align: center;
-  }
-
-  .dock-item:active {
-    transform: scale(0.92);
-  }
-
-  .dock-icon {
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
-  .dock-item.active {
-    color: #ffffff;
-    background: rgba(37, 99, 235, 0.3);
-  }
-
-  .dock-active-pill {
-    position: absolute;
-    top: 3px;
-    width: 18px;
-    height: 3px;
-    background: #3b82f6;
-    border-radius: 4px;
-    box-shadow: 0 0 10px #3b82f6;
-  }
+/* Hide any legacy dock styles */
+.mobile-bottom-dock {
+  display: none !important;
 }
+
 
 @media (max-width: 480px) {
   .metric-value {

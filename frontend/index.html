@@ -37,30 +37,11 @@
       </button>
     </form>
 
-    <!-- Demo Credentials Quick-Fill -->
-    <div class="demo-credentials-box">
-      <div class="demo-credentials-title">Demo Testing Accounts (Click to Fill)</div>
-      <div class="demo-btn-group">
-        <button type="button" class="btn-demo-fill" onclick="fillDemo('scan.supervisor', 'Scan@123')">Scanning Sup.</button>
-        <button type="button" class="btn-demo-fill" onclick="fillDemo('batch.supervisor', 'Batch@123')">Batch Sup.</button>
-        <button type="button" class="btn-demo-fill" onclick="fillDemo('dispatch.supervisor', 'Dispatch@123')">Dispatch Sup.</button>
-        <button type="button" class="btn-demo-fill" onclick="fillDemo('hod', 'HOD@123')">HOD</button>
-        <button type="button" class="btn-demo-fill" onclick="fillDemo('admin', 'Admin@123')">Admin</button>
-      </div>
-    </div>
   </div>
 
   <script src="./js/api.js"></script>
   <script src="./js/auth.js"></script>
   <script>
-    function fillDemo(username, password) {
-      document.getElementById('username').value = username;
-      document.getElementById('password').value = password;
-      document.getElementById('login-error').style.display = 'none';
-      const form = document.getElementById('login-form');
-      if (form) form.requestSubmit();
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
       // Check query params for session expiration message
       const urlParams = new URLSearchParams(window.location.search);

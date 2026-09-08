@@ -24,7 +24,7 @@ function renderUsersTable() {
   const roleLabels = {
     scanning_supervisor: 'Scanning Supervisor',
     batch_supervisor: 'Batch Supervisor',
-    dispatch_supervisor: 'Dispatch Supervisor',
+    dispatch_supervisor: 'Attendance Supervisor',
     hod: 'Department HOD',
     admin: 'System Admin'
   };

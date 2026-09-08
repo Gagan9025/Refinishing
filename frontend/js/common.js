@@ -188,6 +188,8 @@ function initHeaderAndSidebar(activeKey = '') {
     menuItems.push({ key: 'hod-dashboard', label: 'HOD Overview', shortLabel: 'HOD', icon: '📊', url: '/pages/hod-dashboard.html' });
   }
 
+  menuItems.push({ key: 'revenue-dashboard', label: 'Revenue & Analytics', shortLabel: 'Revenue', icon: '💰', url: '/pages/revenue-dashboard.html' });
+
   if (role === 'admin') {
     menuItems.push({ key: 'admin-dashboard', label: 'System Admin', shortLabel: 'Admin', icon: '🛠️', url: '/pages/admin-dashboard.html' });
   }
@@ -206,35 +208,11 @@ function initHeaderAndSidebar(activeKey = '') {
     link.addEventListener('click', closeMobileMenu);
   });
 
-  // Create floating bottom navigation dock for mobile devices
-  let bottomDock = document.querySelector('.mobile-bottom-dock');
-  if (!bottomDock) {
-    bottomDock = document.createElement('nav');
-    bottomDock.className = 'mobile-bottom-dock';
-    document.body.appendChild(bottomDock);
-  }
-
-  // Select top 3 primary items + 1 menu toggle for bottom dock
-  const dockItems = menuItems.slice(0, 3);
-  bottomDock.innerHTML = `
-    <div class="dock-container">
-      ${dockItems.map(item => `
-        <a href="${item.url}" class="dock-item ${activeKey === item.key ? 'active' : ''}">
-          <span class="dock-icon">${item.icon}</span>
-          <span class="dock-label">${item.shortLabel || item.label}</span>
-          ${activeKey === item.key ? '<span class="dock-active-pill"></span>' : ''}
-        </a>
-      `).join('')}
-      <button class="dock-item dock-menu-btn ${sidebar && sidebar.classList.contains('mobile-open') ? 'active' : ''}" id="dock-toggle-btn">
-        <span class="dock-icon">☰</span>
-        <span class="dock-label">Menu</span>
-      </button>
-    </div>
-  `;
-
-  const dockToggleBtn = document.getElementById('dock-toggle-btn');
-  if (dockToggleBtn) {
-    dockToggleBtn.addEventListener('click', toggleMobileMenu);
+  // Remove any leftover mobile-bottom-dock element if present
+  const existingDock = document.querySelector('.mobile-bottom-dock');
+  if (existingDock) {
+    existingDock.remove();
   }
 }
+
 

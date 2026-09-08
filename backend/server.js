@@ -14,6 +14,7 @@ const attendanceRoutes = require('./routes/attendance');
 const hodRoutes = require('./routes/hod');
 const adminRoutes = require('./routes/admin');
 const exportRoutes = require('./routes/export');
+const analyticsRoutes = require('./routes/analytics');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,6 +36,7 @@ app.use('/api/attendance', attendanceRoutes);
 app.use('/api/hod', hodRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/export', exportRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // Redirect old/removed dispatch routes directly to Attendance page
 app.get(['/pages/dispatch-dashboard.html', '/dispatch-dashboard'], (req, res) => {

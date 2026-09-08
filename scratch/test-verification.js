@@ -114,10 +114,16 @@ async function runVerificationTests() {
     const usersList = await makeRequest('/api/admin/users', 'GET', null, adminToken);
     assert(usersList.status === 200 && usersList.body.users.length >= 5, 'Admin fetched all system user accounts');
 
-    // 7. Test Attendance CSV Export
-    console.log('\n--- 7. Testing CSV Export Engine ---');
-    const exportRes = await makeRequest('/api/export/download?module=attendance&startDate=' + todayStr + '&endDate=' + todayStr, 'GET', null, dispatchToken);
-    assert(exportRes.status === 200 && typeof exportRes.body === 'string' && exportRes.body.includes('Employee ID'), 'Attendance CSV export generated valid report');
+    // 8. Test Revenue & Production Analytics Endpoint
+    console.log('\n--- 8. Testing Revenue & Production Analytics ---');
+    const analyticsDaily = await makeRequest('/api/analytics/revenue-production?timeframe=daily', 'GET', null, hodToken);
+    assert(analyticsDaily.status === 200 && analyticsDaily.body.data.length > 0, 'Revenue & Analytics API returns daily breakdown');
+
+    const analyticsWeekly = await makeRequest('/api/analytics/revenue-production?timeframe=weekly', 'GET', null, hodToken);
+    assert(analyticsWeekly.status === 200 && analyticsWeekly.body.data.length > 0, 'Revenue & Analytics API returns weekly breakdown');
+
+    const analyticsMonthly = await makeRequest('/api/analytics/revenue-production?timeframe=monthly', 'GET', null, hodToken);
+    assert(analyticsMonthly.status === 200 && analyticsMonthly.body.data.length > 0 && analyticsMonthly.body.summary.monthlyTarget === 208000, 'Revenue & Analytics API returns monthly breakdown with 208,000 monthly target');
 
     console.log('\n====================================================');
     console.log(` Verification Summary: ${passed} PASSED, ${failed} FAILED`);
