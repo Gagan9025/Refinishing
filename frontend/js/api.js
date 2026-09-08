@@ -49,7 +49,8 @@ const API = {
       if (response.status === 401 || response.status === 403) {
         // Unauthenticated or expired session
         const data = await response.json().catch(() => ({}));
-        if (response.status === 401 && !window.location.pathname.endsWith('index.html')) {
+        const isLoginPage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+        if (response.status === 401 && !endpoint.includes('/api/auth/login') && !isLoginPage) {
           this.clearAuth();
           window.location.href = '/index.html?sessionExpired=true';
         }

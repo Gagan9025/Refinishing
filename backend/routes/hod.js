@@ -6,27 +6,35 @@ const { requireRole } = require('../middleware/rbac');
 
 const ALLOWED_ROLES = ['hod', 'admin'];
 
+function getLocalDateString(d = new Date()) {
+  const dateObj = typeof d === 'string' ? new Date(d) : d;
+  if (isNaN(dateObj.getTime())) return new Date().toISOString().split('T')[0];
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 function getDateRangeBounds(rangeType, customStart, customEnd) {
-  const today = new Date();
-  const todayStr = today.toISOString().split('T')[0];
+  const todayStr = getLocalDateString();
 
   if (rangeType === 'yesterday') {
     const y = new Date();
     y.setDate(y.getDate() - 1);
-    const yStr = y.toISOString().split('T')[0];
+    const yStr = getLocalDateString(y);
     return { startDate: yStr, endDate: yStr };
   }
 
   if (rangeType === 'weekly') {
     const w = new Date();
     w.setDate(w.getDate() - 7);
-    return { startDate: w.toISOString().split('T')[0], endDate: todayStr };
+    return { startDate: getLocalDateString(w), endDate: todayStr };
   }
 
   if (rangeType === 'monthly') {
     const m = new Date();
     m.setDate(m.getDate() - 30);
-    return { startDate: m.toISOString().split('T')[0], endDate: todayStr };
+    return { startDate: getLocalDateString(m), endDate: todayStr };
   }
 
   if (rangeType === 'custom' && customStart && customEnd) {

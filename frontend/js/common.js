@@ -30,8 +30,19 @@ function showToast(message, type = 'success') {
   }, 4000);
 }
 
+function getLocalDateString(d = new Date()) {
+  const dateObj = typeof d === 'string' ? new Date(d) : d;
+  if (isNaN(dateObj.getTime())) {
+    return new Date().toISOString().split('T')[0];
+  }
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 function getSlotStatus(slot, targetDateStr) {
-  const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = getLocalDateString();
 
   if (targetDateStr < todayStr) return 'COMPLETED';
   if (targetDateStr > todayStr) return 'UPCOMING';
@@ -58,7 +69,7 @@ function getSlotStatus(slot, targetDateStr) {
 }
 
 function getDayStatusMessage(targetDateStr) {
-  const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = getLocalDateString();
   if (targetDateStr < todayStr) return 'HISTORICAL DATE';
   if (targetDateStr > todayStr) return 'UPCOMING DATE';
 

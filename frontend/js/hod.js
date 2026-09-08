@@ -2,6 +2,7 @@
 
 let currentOverview = null;
 let currentSupervisorData = null;
+let currentBounds = { startDate: '', endDate: '' };
 
 async function loadHodDashboard() {
   const rangeType = document.getElementById('hod-range-type').value;
@@ -24,6 +25,7 @@ async function loadHodDashboard() {
   try {
     const res = await API.request(`/api/hod/overview?${query}`);
     currentOverview = res.summary;
+    currentBounds = res.bounds || { startDate: singleDate, endDate: singleDate };
     renderHodOverview();
     loadHodComparison();
     loadSupervisorView();
@@ -190,8 +192,10 @@ function renderSupervisorDetailView(data, moduleName) {
   `;
 }
 
-function exportHodReport() {
+function exportHodReport(format = 'excel') {
   const mod = document.getElementById('hod-supervisor-select').value;
-  const date = document.getElementById('hod-single-date').value;
-  window.open(`/api/export/download?module=${mod}&startDate=${date}&endDate=${date}`, '_blank');
+  const singleDate = document.getElementById('hod-single-date').value;
+  const startDate = currentBounds.startDate || singleDate;
+  const endDate = currentBounds.endDate || singleDate;
+  window.open(`/api/export/download?module=${mod}&startDate=${startDate}&endDate=${endDate}&format=${format}`, '_blank');
 }

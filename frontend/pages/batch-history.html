@@ -48,8 +48,8 @@
             <h1 class="page-title">Batch Production History</h1>
             <p class="page-subtitle">View historical batch production records and performance metrics.</p>
           </div>
-          <div>
-            <button class="btn btn-secondary" onclick="exportHistory()">📥 Export CSV Report</button>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button class="btn btn-success" onclick="exportHistory('excel')">📊 Export Excel Report</button>
           </div>
         </div>
 
@@ -152,10 +152,10 @@
       }
     }
 
-    function exportHistory() {
+    function exportHistory(format = 'excel') {
       const start = document.getElementById('history-start-date').value;
       const end = document.getElementById('history-end-date').value;
-      window.open(`/api/export/download?module=batch&startDate=${start}&endDate=${end}`, '_blank');
+      window.open(`/api/export/download?module=batch&startDate=${start}&endDate=${end}&format=${format}`, '_blank');
     }
   </script>
 </body>

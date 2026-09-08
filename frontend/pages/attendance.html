@@ -49,10 +49,10 @@
             <p class="page-subtitle">Track daily worker attendance, present/absent counts, and arrival times.</p>
           </div>
 
-          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <button class="btn btn-primary" onclick="openAddModal()">➕ Add Employee</button>
-            <button class="btn btn-danger" onclick="resetAttendanceData()">🔄 Reset Day Attendance</button>
-            <button class="btn btn-secondary" onclick="triggerExportAttendance()">📥 Export Attendance CSV</button>
+            <button class="btn btn-success" onclick="triggerExportAttendance('excel')">📊 Export Excel</button>
+            <button class="btn btn-danger" onclick="resetAttendanceData()">🔄 Reset Day Roster</button>
           </div>
         </div>
 
@@ -61,7 +61,11 @@
           <div class="form-group-row">
             <div class="form-group">
               <label class="form-label" for="attendance-date">Select Attendance Date</label>
-              <input type="date" id="attendance-date" class="form-input" onchange="loadAttendanceData()">
+              <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                <input type="date" id="attendance-date" class="form-input" onchange="loadAttendanceData()">
+                <button type="button" class="btn btn-sm btn-secondary" onclick="setQuickAttendanceDate(0)">Today</button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="setQuickAttendanceDate(-1)">Yesterday</button>
+              </div>
             </div>
           </div>
         </div>
@@ -169,7 +173,7 @@
 
       initHeaderAndSidebar('attendance');
 
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = typeof getLocalDateString === 'function' ? getLocalDateString() : new Date().toISOString().split('T')[0];
       const dateInput = document.getElementById('attendance-date');
       if (dateInput) dateInput.value = todayStr;
 

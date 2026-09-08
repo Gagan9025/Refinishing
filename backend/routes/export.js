@@ -10,6 +10,7 @@ router.get('/download', authenticateToken, async (req, res) => {
     const userRole = req.user.role;
 
     const moduleName = mod || 'scanning';
+    const isExcel = format === 'excel' || format === 'xlsx';
 
     // Verify role permissions for exports
     if (userRole === 'scanning_supervisor' && moduleName !== 'scanning') {
@@ -22,18 +23,29 @@ router.get('/download', authenticateToken, async (req, res) => {
       return res.status(403).json({ error: 'Access denied. You can only export Dispatch or Attendance records.' });
     }
 
-    let csvContent = '';
-    const filename = `${moduleName}_report_${new Date().toISOString().split('T')[0]}.csv`;
+    const todayStr = new Date().toISOString().split('T')[0];
+    const fileExt = isExcel ? 'xls' : 'csv';
+    const filename = `${moduleName}_report_${startDate || todayStr}_to_${endDate || todayStr}.${fileExt}`;
 
-    if (moduleName === 'attendance') {
-      csvContent = await exportService.generateAttendanceCsv(startDate, endDate);
+    let content = '';
+    if (isExcel) {
+      if (moduleName === 'attendance') {
+        content = await exportService.generateAttendanceExcel(startDate, endDate);
+      } else {
+        content = await exportService.generateProductionExcel(moduleName, startDate, endDate);
+      }
+      res.setHeader('Content-Type', 'application/vnd.ms-excel; charset=utf-8');
     } else {
-      csvContent = await exportService.generateProductionCsv(moduleName, startDate, endDate);
+      if (moduleName === 'attendance') {
+        content = await exportService.generateAttendanceCsv(startDate, endDate);
+      } else {
+        content = await exportService.generateProductionCsv(moduleName, startDate, endDate);
+      }
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
     }
 
-    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    res.status(200).send(csvContent);
+    res.status(200).send(content);
   } catch (err) {
     console.error('Error generating export file:', err);
     res.status(500).json({ error: 'Failed to generate export file.' });

@@ -60,9 +60,84 @@
       "updatedBy": "scan.supervisor",
       "updatedAt": "2026-09-06T17:38:20.333Z",
       "createdAt": "2026-09-06T17:38:20.333Z"
+    },
+    "scanning_2026-09-07": {
+      "date": "2026-09-07",
+      "supervisorId": "scan.supervisor",
+      "supervisorName": "Scanning Supervisor",
+      "dailyTarget": 800,
+      "hourlyTarget": 100,
+      "hourlyData": {
+        "slot_1": 105,
+        "slot_2": 98,
+        "slot_3": 110,
+        "slot_4": 95,
+        "slot_5": 102,
+        "slot_6": 100,
+        "slot_7": 96,
+        "slot_8": 104
+      },
+      "totalAchieved": 810,
+      "pending": 0,
+      "achievementPercentage": 101.25,
+      "updatedBy": "scan.supervisor",
+      "updatedAt": "2026-09-08T16:22:46.115Z",
+      "createdAt": "2026-09-08T16:22:46.121Z"
+    },
+    "scanning_2026-09-08": {
+      "date": "2026-09-08",
+      "supervisorId": "scan.supervisor",
+      "supervisorName": "Scanning Supervisor",
+      "dailyTarget": 8000,
+      "hourlyTarget": 1000,
+      "hourlyData": {},
+      "totalAchieved": 0,
+      "pending": 8000,
+      "achievementPercentage": 0,
+      "updatedBy": "scan.supervisor",
+      "updatedAt": "2026-09-08T16:34:05.430Z",
+      "createdAt": "2026-09-08T16:34:05.430Z"
     }
   },
-  "batchProduction": {},
+  "batchProduction": {
+    "batch_2026-09-07": {
+      "date": "2026-09-07",
+      "supervisorId": "batch.supervisor",
+      "supervisorName": "Batch Supervisor",
+      "dailyTarget": 600,
+      "hourlyTarget": 75,
+      "hourlyData": {
+        "slot_1": 75,
+        "slot_2": 80,
+        "slot_3": 70,
+        "slot_4": 78,
+        "slot_5": 82,
+        "slot_6": 74,
+        "slot_7": 76,
+        "slot_8": 80
+      },
+      "totalAchieved": 615,
+      "pending": 0,
+      "achievementPercentage": 102.5,
+      "updatedBy": "batch.supervisor",
+      "updatedAt": "2026-09-08T16:22:46.125Z",
+      "createdAt": "2026-09-08T16:22:46.125Z"
+    },
+    "batch_2026-09-08": {
+      "date": "2026-09-08",
+      "supervisorId": "batch.supervisor",
+      "supervisorName": "Batch Supervisor",
+      "dailyTarget": 8000,
+      "hourlyTarget": 1000,
+      "hourlyData": {},
+      "totalAchieved": 0,
+      "pending": 8000,
+      "achievementPercentage": 0,
+      "updatedBy": "batch.supervisor",
+      "updatedAt": "2026-09-08T16:29:46.001Z",
+      "createdAt": "2026-09-08T16:29:46.001Z"
+    }
+  },
   "dispatchProduction": {},
   "attendance": {
     "attendance_2026-09-06": {
@@ -377,6 +452,350 @@
       "isNew": true,
       "updatedAt": "2026-09-06T16:39:50.424Z",
       "createdAt": "2026-09-06T16:39:50.424Z"
+    },
+    "attendance_2026-09-07": {
+      "date": "2026-09-07",
+      "totalEmployees": 50,
+      "presentCount": 47,
+      "absentCount": 3,
+      "attendancePercentage": 94,
+      "records": [
+        {
+          "employeeId": "EMP001",
+          "employeeName": "Alex Johnson",
+          "status": "Present",
+          "time": "08:25 AM"
+        },
+        {
+          "employeeId": "EMP002",
+          "employeeName": "Beatriz Silva",
+          "status": "Present",
+          "time": "08:28 AM"
+        },
+        {
+          "employeeId": "EMP003",
+          "employeeName": "Carlos Mendez",
+          "status": "Absent",
+          "time": "—"
+        }
+      ],
+      "markedBy": "dispatch.supervisor",
+      "updatedAt": "2026-09-08T16:22:46.129Z",
+      "createdAt": "2026-09-08T16:22:46.129Z"
+    },
+    "attendance_2026-09-08": {
+      "date": "2026-09-08",
+      "totalEmployees": 50,
+      "presentCount": 42,
+      "absentCount": 0,
+      "attendancePercentage": 84,
+      "records": [
+        {
+          "employeeId": "EMP001",
+          "employeeName": "Alex Johnson",
+          "status": "Present",
+          "time": "10:03 pm"
+        },
+        {
+          "employeeId": "EMP002",
+          "employeeName": "Beatriz Silva",
+          "status": "Present",
+          "time": "10:03 pm"
+        },
+        {
+          "employeeId": "EMP003",
+          "employeeName": "Carlos Mendez",
+          "status": "Present",
+          "time": "10:03 pm"
+        },
+        {
+          "employeeId": "EMP004",
+          "employeeName": "David Kim",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP005",
+          "employeeName": "Elena Rostova",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP006",
+          "employeeName": "Farhan Akhtar",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP007",
+          "employeeName": "Grace Chen",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP008",
+          "employeeName": "Hassan Ali",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP009",
+          "employeeName": "Irene Adler",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP010",
+          "employeeName": "Jamal Crawford",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP011",
+          "employeeName": "Kevin Patel",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP012",
+          "employeeName": "Laura Palmer",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP013",
+          "employeeName": "Marcus Vance",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP014",
+          "employeeName": "Nina Dobrev",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP015",
+          "employeeName": "Omar Farooq",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP016",
+          "employeeName": "Pradeep Sharma",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP017",
+          "employeeName": "Qasim Khan",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP018",
+          "employeeName": "Rachel Green",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP019",
+          "employeeName": "Siddharth Rao",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP020",
+          "employeeName": "Tariq Mahmood",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP021",
+          "employeeName": "Umar Farooq",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP022",
+          "employeeName": "Victor Hugo",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP023",
+          "employeeName": "Winston Smith",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP024",
+          "employeeName": "Xavier Dupont",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP025",
+          "employeeName": "Yousuf Raza",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP026",
+          "employeeName": "Zainab Malik",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP027",
+          "employeeName": "Aaron Paul",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP028",
+          "employeeName": "Bryan Cranston",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP029",
+          "employeeName": "Claire Danes",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP030",
+          "employeeName": "Daniel Craig",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP031",
+          "employeeName": "Emily Blunt",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP032",
+          "employeeName": "Frank Castle",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP033",
+          "employeeName": "George Clooney",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP034",
+          "employeeName": "Hannah Abbott",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP035",
+          "employeeName": "Ian McKellen",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP036",
+          "employeeName": "John Wick",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP037",
+          "employeeName": "Kate Winslet",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP038",
+          "employeeName": "Liam Neeson",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP039",
+          "employeeName": "Morgan Freeman",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP040",
+          "employeeName": "Naomi Watts",
+          "status": "Unmarked",
+          "time": "—"
+        },
+        {
+          "employeeId": "EMP041",
+          "employeeName": "Oliver Stone",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP042",
+          "employeeName": "Peter Parker",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP043",
+          "employeeName": "Quentin Tarantino",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP044",
+          "employeeName": "Robert DeNiro",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP045",
+          "employeeName": "Steve Rogers",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP046",
+          "employeeName": "Tom Hardy",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP047",
+          "employeeName": "Uma Thurman",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP048",
+          "employeeName": "Vin Diesel",
+          "status": "Present",
+          "time": "10:05 pm"
+        },
+        {
+          "employeeId": "EMP049",
+          "employeeName": "Will Smith",
+          "status": "Present",
+          "time": "10:06 pm"
+        },
+        {
+          "employeeId": "EMP050",
+          "employeeName": "Zendaya Coleman",
+          "status": "Unmarked",
+          "time": "—"
+        }
+      ],
+      "markedBy": "admin",
+      "isNew": true,
+      "updatedAt": "2026-09-08T16:36:01.560Z",
+      "createdAt": "2026-09-08T16:31:31.032Z",
+      "id": "attendance_2026-09-08"
     }
   }
 }

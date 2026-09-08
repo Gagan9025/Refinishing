@@ -50,10 +50,10 @@
             <p class="page-subtitle">Set daily targets, record hourly piece counts, and track achievement in real-time.</p>
           </div>
 
-          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <span id="day-status-banner" class="badge badge-info" style="padding: 8px 14px; font-size: 0.85rem;">PRODUCTION IN PROGRESS</span>
-            <button class="btn btn-danger" onclick="resetScanningData()">🔄 Reset Day Data to 0</button>
-            <button class="btn btn-secondary" onclick="triggerExport('csv')">📥 Export CSV</button>
+            <button class="btn btn-success" onclick="triggerExport('excel')">📊 Export Excel</button>
+            <button class="btn btn-danger" onclick="resetScanningData()">🔄 Reset Day Data</button>
           </div>
         </div>
 
@@ -64,7 +64,11 @@
             <div class="form-group-row">
               <div class="form-group">
                 <label class="form-label" for="target-date">Select Date</label>
-                <input type="date" id="target-date" class="form-input" onchange="loadScanningDashboard()">
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                  <input type="date" id="target-date" class="form-input" onchange="loadScanningDashboard()">
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="setQuickDate(0)">Today</button>
+                  <button type="button" class="btn btn-sm btn-secondary" onclick="setQuickDate(-1)">Yesterday</button>
+                </div>
               </div>
 
               <div class="form-group">
@@ -160,7 +164,7 @@
 
       initHeaderAndSidebar('scanning-dashboard');
       
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = typeof getLocalDateString === 'function' ? getLocalDateString() : new Date().toISOString().split('T')[0];
       const dateInput = document.getElementById('target-date');
       if (dateInput) dateInput.value = todayStr;
 

@@ -48,8 +48,8 @@
             <h1 class="page-title">Refinishing Department Overview</h1>
             <p class="page-subtitle">Real-time monitoring across Scanning, Batch Production, and Staff Attendance.</p>
           </div>
-          <div>
-            <button class="btn btn-secondary" onclick="exportHodReport()">📥 Export Module Report</button>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button class="btn btn-success" onclick="exportHodReport('excel')">📊 Export Excel Report</button>
           </div>
         </div>
 
@@ -192,7 +192,7 @@
 
       initHeaderAndSidebar('hod-dashboard');
 
-      const todayStr = new Date().toISOString().split('T')[0];
+      const todayStr = typeof getLocalDateString === 'function' ? getLocalDateString() : new Date().toISOString().split('T')[0];
       const dateInput = document.getElementById('hod-single-date');
       if (dateInput) dateInput.value = todayStr;
 

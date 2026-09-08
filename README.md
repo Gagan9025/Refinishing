@@ -13,7 +13,7 @@ A full-stack, responsive web application for managing daily production, hourly a
 - **Frontend**: HTML5, Vanilla CSS3, Vanilla JavaScript (ES6+)
 - **Backend**: Node.js, Express.js
 - **Database**: Firebase Firestore (with local persistent emulator fallback)
-- **Export**: UTF-8 BOM CSV Export Engine
+- **Export**: Excel Spreadsheet (.xlsx / .xls) & UTF-8 BOM CSV Export Engine
 
 ## 💻 Getting Started
 

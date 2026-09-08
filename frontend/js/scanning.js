@@ -1,7 +1,7 @@
 /* Scanning Production Module JS */
 
 let currentData = null;
-let selectedDate = new Date().toISOString().split('T')[0];
+let selectedDate = typeof getLocalDateString === 'function' ? getLocalDateString() : new Date().toISOString().split('T')[0];
 
 const WORKING_SLOTS = [
   { slotId: 'slot_1', time: '8:30 AM – 9:30 AM', isLunch: false },
@@ -15,10 +15,21 @@ const WORKING_SLOTS = [
   { slotId: 'slot_8', time: '4:00 PM – 5:00 PM', isLunch: false }
 ];
 
+function setQuickDate(offsetDays) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  const dateStr = typeof getLocalDateString === 'function' ? getLocalDateString(d) : d.toISOString().split('T')[0];
+  const inputEl = document.getElementById('target-date');
+  if (inputEl) {
+    inputEl.value = dateStr;
+  }
+  loadScanningDashboard();
+}
+
 async function loadScanningDashboard() {
   const dateInput = document.getElementById('target-date');
-  if (dateInput) {
-    selectedDate = dateInput.value || selectedDate;
+  if (dateInput && dateInput.value) {
+    selectedDate = dateInput.value;
   }
 
   try {
@@ -176,11 +187,17 @@ async function saveTarget() {
   const dateVal = document.getElementById('target-date').value;
   const targetVal = document.getElementById('input-daily-target').value;
 
+  if (!dateVal) {
+    showToast('Please select a valid date', 'warning');
+    return;
+  }
+
   if (!targetVal || parseInt(targetVal, 10) <= 0) {
     showToast('Please enter a valid daily target greater than 0', 'warning');
     return;
   }
 
+  selectedDate = dateVal;
   const btn = document.getElementById('btn-save-target');
   if (btn) btn.disabled = true;
 

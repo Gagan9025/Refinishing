@@ -1,12 +1,23 @@
 /* Employee Attendance Module JS */
 
 let currentAttendance = null;
-let selectedDate = new Date().toISOString().split('T')[0];
+let selectedDate = typeof getLocalDateString === 'function' ? getLocalDateString() : new Date().toISOString().split('T')[0];
+
+function setQuickAttendanceDate(offsetDays) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetDays);
+  const dateStr = typeof getLocalDateString === 'function' ? getLocalDateString(d) : d.toISOString().split('T')[0];
+  const inputEl = document.getElementById('attendance-date');
+  if (inputEl) {
+    inputEl.value = dateStr;
+  }
+  loadAttendanceData();
+}
 
 async function loadAttendanceData() {
   const dateInput = document.getElementById('attendance-date');
-  if (dateInput) {
-    selectedDate = dateInput.value || selectedDate;
+  if (dateInput && dateInput.value) {
+    selectedDate = dateInput.value;
   }
 
   try {
@@ -149,6 +160,6 @@ function closeAddModal() {
   document.getElementById('add-emp-form').reset();
 }
 
-function triggerExportAttendance() {
-  window.open(`/api/export/download?module=attendance&startDate=${selectedDate}&endDate=${selectedDate}`, '_blank');
+function triggerExportAttendance(format = 'excel') {
+  window.open(`/api/export/download?module=attendance&startDate=${selectedDate}&endDate=${selectedDate}&format=${format}`, '_blank');
 }

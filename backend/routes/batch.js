@@ -7,10 +7,19 @@ const { requireRole } = require('../middleware/rbac');
 const COLLECTION_NAME = 'batchProduction';
 const ALLOWED_ROLES = ['batch_supervisor', 'hod', 'admin'];
 
+function getLocalDateString(d = new Date()) {
+  const dateObj = typeof d === 'string' ? new Date(d) : d;
+  if (isNaN(dateObj.getTime())) return new Date().toISOString().split('T')[0];
+  const year = dateObj.getFullYear();
+  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 // Get batch production data for a date
 router.get('/data', authenticateToken, requireRole(...ALLOWED_ROLES), async (req, res) => {
   try {
-    const date = req.query.date || new Date().toISOString().split('T')[0];
+    const date = req.query.date || getLocalDateString();
     const docId = `batch_${date}`;
 
     let data = await dbService.getDocument(COLLECTION_NAME, docId);
