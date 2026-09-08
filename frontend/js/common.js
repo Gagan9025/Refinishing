@@ -86,16 +86,53 @@ function initHeaderAndSidebar(activeKey = '') {
   const user = API.getUser();
   if (!user) return;
 
+  // Create backdrop overlay if not present
+  let overlay = document.querySelector('.mobile-nav-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'mobile-nav-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  const sidebar = document.querySelector('.sidebar');
+
+  function closeMobileMenu() {
+    if (sidebar) sidebar.classList.remove('mobile-open');
+    if (overlay) overlay.classList.remove('active');
+    const toggleBtn = document.getElementById('mobile-toggle-btn');
+    if (toggleBtn) toggleBtn.classList.remove('is-active');
+  }
+
+  function openMobileMenu() {
+    if (sidebar) sidebar.classList.add('mobile-open');
+    if (overlay) overlay.classList.add('active');
+    const toggleBtn = document.getElementById('mobile-toggle-btn');
+    if (toggleBtn) toggleBtn.classList.add('is-active');
+  }
+
+  function toggleMobileMenu() {
+    if (sidebar && sidebar.classList.contains('mobile-open')) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  }
+
+  overlay.addEventListener('click', closeMobileMenu);
+
   const headerLeft = document.querySelector('.header-left');
   if (headerLeft && !document.getElementById('mobile-toggle-btn')) {
     const toggleBtn = document.createElement('button');
     toggleBtn.id = 'mobile-toggle-btn';
     toggleBtn.className = 'mobile-nav-toggle';
-    toggleBtn.innerHTML = '☰ Menu';
-    toggleBtn.addEventListener('click', () => {
-      const sidebar = document.querySelector('.sidebar');
-      if (sidebar) sidebar.classList.toggle('mobile-open');
-    });
+    toggleBtn.setAttribute('aria-label', 'Toggle Navigation Menu');
+    toggleBtn.innerHTML = `
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+      <span class="toggle-label">Menu</span>
+    `;
+    toggleBtn.addEventListener('click', toggleMobileMenu);
     headerLeft.prepend(toggleBtn);
   }
 
@@ -134,33 +171,70 @@ function initHeaderAndSidebar(activeKey = '') {
   const menuItems = [];
 
   if (role === 'scanning_supervisor' || role === 'admin' || role === 'hod') {
-    menuItems.push({ key: 'scanning-dashboard', label: 'Scanning Production', icon: '📦', url: '/pages/scanning-dashboard.html' });
-    menuItems.push({ key: 'scanning-history', label: 'Scanning History', icon: '📜', url: '/pages/scanning-history.html' });
+    menuItems.push({ key: 'scanning-dashboard', label: 'Scanning Production', shortLabel: 'Scanning', icon: '📦', url: '/pages/scanning-dashboard.html' });
+    menuItems.push({ key: 'scanning-history', label: 'Scanning History', shortLabel: 'Scan Logs', icon: '📜', url: '/pages/scanning-history.html' });
   }
 
   if (role === 'batch_supervisor' || role === 'admin' || role === 'hod') {
-    menuItems.push({ key: 'batch-dashboard', label: 'Batch Production', icon: '⚙️', url: '/pages/batch-dashboard.html' });
-    menuItems.push({ key: 'batch-history', label: 'Batch History', icon: '📜', url: '/pages/batch-history.html' });
+    menuItems.push({ key: 'batch-dashboard', label: 'Batch Production', shortLabel: 'Batches', icon: '⚙️', url: '/pages/batch-dashboard.html' });
+    menuItems.push({ key: 'batch-history', label: 'Batch History', shortLabel: 'Batch Logs', icon: '📜', url: '/pages/batch-history.html' });
   }
 
   if (role === 'dispatch_supervisor' || role === 'admin' || role === 'hod') {
-    menuItems.push({ key: 'attendance', label: 'Employee Attendance', icon: '👥', url: '/pages/attendance.html' });
+    menuItems.push({ key: 'attendance', label: 'Employee Attendance', shortLabel: 'Attendance', icon: '👥', url: '/pages/attendance.html' });
   }
 
   if (role === 'hod' || role === 'admin') {
-    menuItems.push({ key: 'hod-dashboard', label: 'HOD Overview', icon: '📊', url: '/pages/hod-dashboard.html' });
+    menuItems.push({ key: 'hod-dashboard', label: 'HOD Overview', shortLabel: 'HOD', icon: '📊', url: '/pages/hod-dashboard.html' });
   }
 
   if (role === 'admin') {
-    menuItems.push({ key: 'admin-dashboard', label: 'System Admin', icon: '🛠️', url: '/pages/admin-dashboard.html' });
+    menuItems.push({ key: 'admin-dashboard', label: 'System Admin', shortLabel: 'Admin', icon: '🛠️', url: '/pages/admin-dashboard.html' });
   }
 
   sidebarNav.innerHTML = menuItems.map(item => `
     <li>
       <a href="${item.url}" class="${activeKey === item.key ? 'active' : ''}">
-        <span>${item.icon}</span>
-        <span>${item.label}</span>
+        <span class="nav-icon">${item.icon}</span>
+        <span class="nav-text">${item.label}</span>
       </a>
     </li>
   `).join('');
+
+  // Close mobile drawer when clicking any sidebar link
+  sidebarNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  // Create floating bottom navigation dock for mobile devices
+  let bottomDock = document.querySelector('.mobile-bottom-dock');
+  if (!bottomDock) {
+    bottomDock = document.createElement('nav');
+    bottomDock.className = 'mobile-bottom-dock';
+    document.body.appendChild(bottomDock);
+  }
+
+  // Select top 3 primary items + 1 menu toggle for bottom dock
+  const dockItems = menuItems.slice(0, 3);
+  bottomDock.innerHTML = `
+    <div class="dock-container">
+      ${dockItems.map(item => `
+        <a href="${item.url}" class="dock-item ${activeKey === item.key ? 'active' : ''}">
+          <span class="dock-icon">${item.icon}</span>
+          <span class="dock-label">${item.shortLabel || item.label}</span>
+          ${activeKey === item.key ? '<span class="dock-active-pill"></span>' : ''}
+        </a>
+      `).join('')}
+      <button class="dock-item dock-menu-btn ${sidebar && sidebar.classList.contains('mobile-open') ? 'active' : ''}" id="dock-toggle-btn">
+        <span class="dock-icon">☰</span>
+        <span class="dock-label">Menu</span>
+      </button>
+    </div>
+  `;
+
+  const dockToggleBtn = document.getElementById('dock-toggle-btn');
+  if (dockToggleBtn) {
+    dockToggleBtn.addEventListener('click', toggleMobileMenu);
+  }
 }
+
