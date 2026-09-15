@@ -4,6 +4,7 @@
   "description": "Refinishing Department Production Management System",
   "main": "backend/server.js",
   "scripts": {
+    "build": "echo \"Static frontend requires no compilation\"",
     "start": "node backend/server.js",
     "dev": "node backend/server.js"
   },
