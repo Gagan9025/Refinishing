@@ -1,0 +1,4 @@
+[build]
+  base = "frontend"
+  command = "echo 'Static frontend requires no compilation'"
+  publish = "."
